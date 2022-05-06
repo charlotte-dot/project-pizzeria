@@ -97,7 +97,7 @@
     const thisApp = this;
     console.log('thisApp.data:', thisApp.data);
     for (let productData in thisApp.data.products){
-      new Products (productData, thisApp.data.products[productData]);
+      new Product (productData, thisApp.data.products[productData]);
     }
     initMenu: function(){
       const testProduct = new Product();
