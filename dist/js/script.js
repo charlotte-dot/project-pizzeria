@@ -146,10 +146,10 @@ const templates = {
       const thisProduct = this;
 
       thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
-      thisProduct.amountWidgetElem.addEventListener("updated", function (event));
-      
+      thisProduct.amountWidgetElem.addEventListener("updated", function (event){
+      thisProduct.processOrder());
     }
-    thisProduct.processOrder();
+    
 
     initAccordion() {
       const thisProduct = this;
@@ -234,6 +234,23 @@ const templates = {
       thisProduct.priceElem.innerHTML = price;
     }
   }
+  class Cart{
+    constructor(element){
+      const thisCart = this;
+
+      this.Cart.products = [];
+
+      thisCart.getElements(element)
+      console.log('new Cart', thisCart);
+    }
+
+    getElements(element){
+      const thisCart = this;
+      thisCart.dom = {};
+
+      thisCart.dom.wrapper = element;
+    }
+  }
   class AmountWidget {
     constructor(element) {
       const thisWidget = this;
@@ -242,16 +259,18 @@ const templates = {
       //console.log("constructor arguments:", element);
 
       thisWidget.getElements(element);
+      thisWidget.initActions();
+      thisWidget.setvalue(thisWidget.input.value || settings.amountWidget.defaultValue);
+    }
 
-      getElements(element){
-        const thisWidget = this;
+    getElements(element){
+      const thisWidget = this;
 
-        thisWidget.element = element;
-        thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
-        thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
-        thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
-        thisProduct.accordionTrigger.addEventListener("click", function (event);
-      }
+      thisWidget.element = element;
+      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+      thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+      thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+      thisProduct.accordionTrigger.addEventListener("click", function (event);
     }
     setValue(value){
       const thisWidget = this;
@@ -281,20 +300,24 @@ const templates = {
     }
     initActions(){
       const thisWidget = this;
-      thisWidget.input.addEventListener("change", setValue(value));
+      thisWidget.input.addEventListener("change", function(e) {
+        setValue(e.target.value);
+      });
 
-      thisWidget.linkDecrease.addEventListener("click", setValue (value) {
-        value.preventDefault();
-        value = thisWidget.value - 1;
-        thisWidget.initActions()});
+      thisWidget.linkDecrease.addEventListener("click", function(e) {
+        e.preventDefault();
+        setValue(thisWidget.value -1);
+        });
 
         thisWidget.linkIncrease.addEventListener("click", setValue (value) {
           value.preventDefault();
           value = thisWidget.value + 1;
-          thisWidget.initActions();
       });
     };
   }
+
+  
+
   const app = {
     initMenu: function () {
       const thisApp = this;

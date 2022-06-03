@@ -146,10 +146,10 @@ const templates = {
       const thisProduct = this;
 
       thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
-      thisProduct.amountWidgetElem.addEventListener("updated", function (event));
-      
+      thisProduct.amountWidgetElem.addEventListener("updated", function (event){
+      thisProduct.processOrder());
     }
-    thisProduct.processOrder();
+    
 
     initAccordion() {
       const thisProduct = this;
@@ -234,24 +234,39 @@ const templates = {
       thisProduct.priceElem.innerHTML = price;
     }
   }
+  class Cart{
+    constructor(element){
+      const thisCart = this;
+
+      this.Cart.products = [];
+
+      thisCart.getElements(element)
+      console.log('new Cart', thisCart);
+    }
+
+    getElements(element){
+      const thisCart = this;
+      thisCart.dom = {};
+
+      thisCart.dom.wrapper = element;
+    }
+  }
   class AmountWidget {
     constructor(element) {
       const thisWidget = this;
 
-      //console.log("AmountWidget:", thisWidget);
-      //console.log("constructor arguments:", element);
-
       thisWidget.getElements(element);
+      thisWidget.initActions();
+      thisWidget.setvalue(thisWidget.input.value || settings.amountWidget.defaultValue);
+    }
 
-      getElements(element){
-        const thisWidget = this;
+    getElements(element){
+      const thisWidget = this;
 
-        thisWidget.element = element;
-        thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
-        thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
-        thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
-        thisProduct.accordionTrigger.addEventListener("click", function (event);
-      }
+      thisWidget.element = element;
+      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+      thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+      thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);     
     }
     setValue(value){
       const thisWidget = this;
@@ -260,41 +275,50 @@ const templates = {
 
       /* TODO: Add validation */
       if(thisWidget.value !== newValue && !isNaN(newValue)) {
-        thisWidget.value = newValue;
+        if (newValue< settings.amountWidget.defaultMin) {
+          thisWidget.value = settings.amountWidget.defaultMin;
+        } else if (newValue > settings.amountWidget.defaultMax) {
+          thisWidget.value = settings.amountWidget.defaultMax;
+        } else {
+          thisWidget.value = newValue;
+        }     
       }
-
+thisWidget.input.value = thisWidget.value;
+thisWidget.announce();
       thisWidget.value = settings.amountWidget.defaultValue;
       thisWidget.input.value = thisWidget.value;
       thisWidget.setvalue(thisWidget.input.value);
 
-      if (thisWidget.value < settings.amountWidget.defaultMin) {
-        thisWidget.value = settings.amountWidget.defaultMin;
-      } else if (thisWidget.value > settings.amountWidget.defaultMax) {
-        thisWidget.value = settings.amountWidget.defaultMax;
-      }
-      announce(){
-        const thisWidget = this;
-  
-        const event = new Event('updated');
-        thisWidget.element.dispatchEvent(event);
-      }
+      
     }
+
+    announce(){
+      const thisWidget = this;
+
+      const event = new Event('updated');
+      thisWidget.element.dispatchEvent(event);
+    }
+
     initActions(){
       const thisWidget = this;
-      thisWidget.input.addEventListener("change", setValue(value));
-
-      thisWidget.linkDecrease.addEventListener("click", setValue (value) {
-        value.preventDefault();
-        value = thisWidget.value - 1;
-        thisWidget.initActions()});
-
-        thisWidget.linkIncrease.addEventListener("click", setValue (value) {
-          value.preventDefault();
-          value = thisWidget.value + 1;
-          thisWidget.initActions();
+      thisWidget.input.addEventListener("change", function(e) {
+        setValue(e.target.value);
       });
+
+      thisWidget.linkDecrease.addEventListener("click", function(e) {
+        e.preventDefault();
+        setValue(thisWidget.value - 1);
+        });
+
+        hisWidget.linkIncrease.addEventListener("click", function(e) {
+        e.preventDefault();
+        setValue(thisWidget.value + 1);
+        });
     };
   }
+
+  
+
   const app = {
     initMenu: function () {
       const thisApp = this;
