@@ -321,6 +321,9 @@
       thisCart.dom.productList.addEventListener('updated', function(){
         thisCart.update();
       });
+      thisCart.dom.productList.addEventListener('remove', function(event){
+        thisCart.remove(event.detail.cartProduct);
+      });
     }
     add(menuProduct){
       const thisCart = this;
@@ -369,7 +372,20 @@
       thisCart.dom.subtotalPrice.innerHTML = subtotalPrice; // update calculated subtotal price in the HTML
       thisCart.dom.totalPrice.innerHTML = totalPrice; // update calculated totalPrice price in the HTML
       thisCart.dom.deliveryFee.innerHTML = deliveryFee; // update deliveryfee in the HTML
-
+    }
+      remove(){
+        const thisCart = this;
+    
+        thisCart.products.splice(new CartProduct(menuProduct, generatedDOM));
+        const event = new CustomEvent('remove', {
+          bubbles: true,
+          detail: {
+            cartProduct: thisCart,
+          },
+        });
+        thisCart.dom.wrapper.dispatchEvent(event);
+        thisCart.update();
+      }
     }
   }
   class CartProduct {
@@ -385,6 +401,7 @@
 
       thisCartProduct.getElements(element);
       thisCartProduct.initAmountWidget();
+      thisCartProduct.initActions();
       console.log('new CartProduct', thisCartProduct);
     }
 
@@ -408,6 +425,33 @@
         thisCartProduct.price = thisCartProduct.dom.amountWidget * thisCartProduct.priceSingle;
       });
     }
+    remove(){
+      const thisCartProduct = this;
+  
+      const event = new CustomEvent('remove', {
+        bubbles: true,
+        detail: {
+          cartProduct: thisCartProduct,
+        },
+      });
+      thisCartProduct.dom.wrapper.dispatchEvent(event);
+      console.log(thisCartProduct.remove);
+    }
+
+    initActions(){
+      const thisCartProduct = this;
+  
+      thisCartProduct.dom.edit.addEventListener('click', function(event){
+        event.preventDefault();
+      });
+  
+      thisCartProduct.dom.remove.addEventListener('click', function(event){
+        event.preventDefault();
+        thisCartProduct.remove();
+      });
+  
+    }
+  
   }
 
   class AmountWidget {
