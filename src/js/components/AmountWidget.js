@@ -43,12 +43,12 @@ class AmountWidget extends BaseWidget {
       thisWidget.setValue(e.target.value);
     });
 
-    thisWidget.dom.linkDecrease.addEventListener("click", function (e) {
+    thisWidget.dom.linkDecrease.addEventListener('click', function (e) {
       e.preventDefault();
       thisWidget.setValue(thisWidget.value - 1);
     });
 
-    thisWidget.dom.linkIncrease.addEventListener("click", function (e) {
+    thisWidget.dom.linkIncrease.addEventListener('click', function (e) {
       e.preventDefault();
       thisWidget.setValue(thisWidget.value + 1);
     });

@@ -29,6 +29,15 @@ export const select = {
       linkDecrease: 'a[href="#less"]',
       linkIncrease: 'a[href="#more"]',
     },
+    datePicker: {
+      wrapper: '.date-picker',
+      input: 'input[name="date"]',
+    },
+    hourPicker: {
+      wrapper: '.hour-picker',
+      input: 'input[type="range"]',
+      output: '.output',
+    },
   },
   // CODE ADDED START
   cart: {
@@ -49,17 +58,6 @@ export const select = {
     price: '.cart__product-price',
     edit: '[href="#edit"]',
     remove: '[href="#remove"]',
-  },
-  timeWidgets: {
-    datePicker: {
-      wrapper: '.date-picker',
-      input: 'input[name="date"]',
-    },
-    hourPicker: {
-      wrapper: '.hour-picker',
-      input: 'input[type="range"]',
-      output: '.output',
-    },
   },
   booking: {
     peopleAmount: '.people-amount',
@@ -108,6 +106,12 @@ export const settings = {
     url: '//localhost:3131',
     products: 'products',
     orders: 'orders',
+    booking: 'booking',
+    event: 'event',
+    dateStartParamKey: 'date_gte',
+    dateEndParamKey: 'date_lte',
+    notRepeatParam: 'repeat=false',
+    repeatParam: 'repeat_ne=false',
   },
   hours: {
     open: 12,
@@ -118,17 +122,6 @@ export const settings = {
   },
   booking: {
     tableIdAttribute: 'data-table',
-  },
-  db: {
-    url: '//localhost:3131',
-    product: 'product',
-    order: 'order',
-    booking: 'booking',
-    event: 'event',
-    dateStartParamKey: 'date_gte',
-    dateEndParamKey: 'date_lte',
-    notRepeatParam: 'repeat=false',
-    repeatParam: 'repeat_ne=false',
   },
 };
 
