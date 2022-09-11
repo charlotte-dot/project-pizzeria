@@ -1,5 +1,7 @@
 import {select, templates} from './../settings.js';
 import AmountWidget from './AmountWidget.js';
+import HourPicker from './HourPicker.js';
+import DatePicker from './DatePicker.js';
 
 class Booking {
   constructor(element) {
