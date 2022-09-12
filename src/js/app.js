@@ -24,7 +24,7 @@ const app = {
     thisApp.activatePage(pageMatchingHash);
 
     for (let link of thisApp.navLinks) {
-      link.addEventListerener('click', function(event) {
+      link.addEventListener('click', function(event) {
         const clickedElement = this;
         event.preventDefault();
 
